@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/p0341_simplesqlite" />
             <option value="$PROJECT_DIR$/p0361_sqlitequery" />
+            <option value="$PROJECT_DIR$/p0371_sqliteinnerjoin" />
           </set>
         </option>
       </GradleProjectSettings>
