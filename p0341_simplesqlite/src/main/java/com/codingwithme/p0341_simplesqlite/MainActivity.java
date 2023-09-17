@@ -13,8 +13,8 @@ import android.widget.EditText;
 public class MainActivity extends Activity implements View.OnClickListener {
     final String LOG_TAG = "myLogs";
 
-    Button btnAdd, btnRead, btnClear;
-    EditText etName, etEmail;
+    Button btnAdd, btnRead, btnClear, btnUpd, btnDel;
+    EditText etName, etEmail, etID;
 
     DBHelper dbHelper;
 
@@ -32,8 +32,15 @@ public class MainActivity extends Activity implements View.OnClickListener {
         btnRead = (Button) findViewById(R.id.btnRead);
         btnRead.setOnClickListener(this);
 
+        btnUpd = (Button) findViewById(R.id.btnUpd);
+        btnUpd.setOnClickListener(this);
+
+        btnDel = (Button) findViewById(R.id.btnDel);
+        btnDel.setOnClickListener(this);
+
         etName = (EditText) findViewById(R.id.etName);
         etEmail = (EditText) findViewById(R.id.etEmail);
+        etID = (EditText) findViewById(R.id.etID);
 
         dbHelper = new DBHelper(this);
 
@@ -45,6 +52,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         String name = etName.getText().toString();
         String email = etEmail.getText().toString();
+        String id = etID.getText().toString();
 
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
@@ -76,8 +84,27 @@ public class MainActivity extends Activity implements View.OnClickListener {
             }
         } else if (view.getId() == R.id.btnClear) {
             Log.d(LOG_TAG, "--- Clear mytable: ---");
-            int clearCount = db.delete("mytable",null, null);
+            int clearCount = db.delete("mytable", null, null);
             Log.d(LOG_TAG, "deleted rows count = " + clearCount);
+        } else if (view.getId() == R.id.btnUpd) {
+            if (!id.equalsIgnoreCase("")) {
+                Log.d(LOG_TAG, "--- Update mytable: ---");
+
+                cv.put("name", name);
+                cv.put("email", email);
+
+                int updCount = db.update("mytable", cv, "id = ?",
+                        new String[]{id});
+                Log.d(LOG_TAG, "updated rows count = " + updCount);
+            }
+        } else if (view.getId() == R.id.btnDel) {
+            if (!id.equalsIgnoreCase("")) {
+                Log.d(LOG_TAG, "--- Delete from mytable: ---");
+
+                int delCount = db.delete("mytable", "id = " + id, null);
+                Log.d(LOG_TAG, "deleted rows count = " + delCount);
+
+            }
         }
         db.close();
     }
