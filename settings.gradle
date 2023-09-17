@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 rootProject.name = "My Application"
 include ':app'
 include ':p0341_simplesqlite'
+include ':p0361_sqlitequery'
